@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'BoldPixels';
+    src: url('../fonts/BoldPixels.ttf') format('truetype');
+    font-display: swap;
+}
+
+:root {
+    color-scheme: dark;
+    --primary: #13271e;
+    --accent: #d4a72c;
+    --accent-hover: #eac65b;
+    --background: #0b110e;
+    --surface: #1d3026;
+    --border: #36523f;
+    --text: #e1e7dd;
+    --text-muted: #a5b5a9;
+    --font-display: 'BoldPixels', monospace;
+    --font-body: system-ui, sans-serif;
+    --radius: 12px;
+}

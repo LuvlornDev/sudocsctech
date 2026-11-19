@@ -1,0 +1,16 @@
+[
+    {
+        "id": "csctech-website",
+        "title": "CSC Tech Website",
+        "description": "The official website of CSC Tech Hack Club.",
+        "author": "Santiago Barajas",
+        "date": "2026-11-19",
+        "image": "/assets/img/logo.png",
+        "tags": [
+            "HTML",
+            "CSS",
+            "JavaScript"
+        ],
+        "url": "/"
+    }
+]

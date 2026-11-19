@@ -1,0 +1,11 @@
+[
+    {
+        "id": "helloworld",
+        "title": "CSC Tech says: Hello World!",
+        "description": "Welcome to the digital home of our technology club.",
+        "category": "Announcement",
+        "date": "2026-11-19",
+        "image": "/assets/img/news/helloworld.jpg",
+        "url": "/news/"
+    }
+]
