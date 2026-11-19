@@ -153,6 +153,71 @@ function renderNews(news) {
         date.dateTime = article.date;
         meta.append(category, date);
         const title = createElement("h3", "", article.title);
-        //follows const description
-    })
+        const description = createElement("p", "", article.description);
+        const link = createElement("a", "text-link", "Read more →");
+        link.href = article.url || "/news/";
+        content.append(meta, title, description, link);
+        card.append(preview, content);
+        container.appendChild(card);
+    });
 }
+
+function renderAchievements(achievements) {
+    const counter = document.getElementById("achievement-count");
+    if (!counter) return;
+    counter.textContent = achievements.length;
+}
+
+function initializeNavigation() {
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("nav-menu");
+    if (!toggle || !menu) return;
+    toggle.addEventListener("click", () => {
+        const isOpen = menu.classList.toggle("active");
+        toggle.classList.toggle("active", isOpen);
+        toggle.setAttribute("aria-expanded", String(isOpen));
+    });
+    menu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+            menu.classList.remove("active");
+            toggle.classList.remove("active");
+            toggle.setAttribute("aria-expanded", "false");
+        });
+    });
+}
+
+async function initializeWebsite() {
+    initializeNavigation();
+    const tasks = [];
+    if (document.getElementById("partners-track") || document.querySelector("[data-collage]")) {
+        tasks.push(fetchData("images.json").then(manifest => {
+            initializePartners(manifest.partners || []);
+            initializeCollages(manifest);
+        }));
+    }
+    if (document.getElementById("latest-projects")) {
+        tasks.push(fetchData("projects.json").then(renderProjects).catch(error => {
+            const container = document.getElementById("latest-projects");
+            container.textContent = "Projects are currently unavailable.";
+            console.error(error);
+        }));
+    }
+    if (document.getElementById("latest-news")) {
+        tasks.push(fetchData("news.json").then(renderNews).catch(error => {
+            const container = document.getElementById("latest-news");
+            container.textContent = "News is currently unavailable.";
+            console.error(error);
+        }));
+    }
+    if (document.getElementById("achievement-count")) {
+        tasks.push(fetchData("achievements.json").then(renderAchievements));
+    }
+    const results = await Promise.allSettled(tasks);
+    results.forEach(result => {
+        if (result.status === "rejected") {
+            console.error("[CSC Tech]", result.reason);
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", initializeWebsite);
